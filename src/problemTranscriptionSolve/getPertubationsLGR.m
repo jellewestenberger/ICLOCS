@@ -237,10 +237,10 @@ end
 dfxu=sparse(M*n,(M+1)*n+M*m);
 for fi=1:size(dfdx,1)
     for xi=1:size(dfdx,2)
-        dfxu(((fi-1)*M+1):fi*M,((xi-1)*(M+1)+1):(xi*(M+1)-1))=spkroneye(M, dfdx(fi,xi));
+        dfxu(((fi-1)*M+1):fi*M,((xi-1)*(M+1)+1):(xi*(M+1)-1))=kron(speye(M),dfdx(fi,xi));
     end
     for ui=1:size(dfdu,2)
-        dfxu(((fi-1)*M+1):fi*M,(n*(M+1)+(ui-1)*M+1):(n*(M+1)+ui*M))=spkroneye(M,dfdu(fi,ui));
+        dfxu(((fi-1)*M+1):fi*M,(n*(M+1)+(ui-1)*M+1):(n*(M+1)+ui*M))=kron(speye(M),dfdu(fi,ui));
     end
 end
 
@@ -311,10 +311,10 @@ if ng
     dgxu=sparse(M*ng,(M+1)*n+M*m);
     for gi=1:size(dgdx,1)
         for xi=1:size(dgdx,2)
-            dgxu(((gi-1)*M+1):gi*M,((xi-1)*(M+1)+1):(xi*(M+1)-1))=spkroneye(M,dgdx(gi,xi));
+            dgxu(((gi-1)*M+1):gi*M,((xi-1)*(M+1)+1):(xi*(M+1)-1))=kron(speye(M),dgdx(gi,xi));
         end
         for ui=1:size(dgdu,2)
-            dgxu(((gi-1)*M+1):gi*M,(n*(M+1)+(ui-1)*M+1):(n*(M+1)+ui*M))=spkroneye(M,dgdu(gi,ui));
+            dgxu(((gi-1)*M+1):gi*M,(n*(M+1)+(ui-1)*M+1):(n*(M+1)+ui*M))=kron(speye(M),dgdu(gi,ui));
         end
     end
 
@@ -383,10 +383,10 @@ if nrc
     drcxu=zeros((M+1)*nrc/M,(M+1)*n+M*m);
     for rci=1:size(drcdx,1)
         for xi=1:size(drcdx,2)
-            drcxu(((rci-1)*(M+1)+1):rci*(M+1),((xi-1)*(M+1)+1):(xi*(M+1)))=spkroneye(M+1,drcdx(rci,xi));
+            drcxu(((rci-1)*(M+1)+1):rci*(M+1),((xi-1)*(M+1)+1):(xi*(M+1)))=kron(speye(M+1),drcdx(rci,xi));
         end
         for ui=1:size(dgdu,2)
-            D_block_U=spkroneye(M+1,drcdu(rci,ui));
+            D_block_U=kron(speye(M+1),drcdu(rci,ui));
             drcxu(((rci-1)*(M+1)+1):rci*(M+1),(n*(M+1)+(ui-1)*(M)+1):(n*(M+1)+ui*(M)))=D_block_U(:,1:end-1);
         end
     end
@@ -434,12 +434,12 @@ if nrc
     vector.rc.ex=cell(nrccol,1);vector.rc.eu=cell(nrccol,1);vector.rc.ep=cell(nrccol,1);vector.rc.et=cell(nt,1);
 
     
-    for i=1:nrccol
+    for i=1:ngcol
         extemp=reshape(ex(:,i)',M+1,n);
         vector.rc.ex{i}=extemp;
         ugs=reshape(eu(:,i)',M,m);
         vector.rc.eu{i}=ugs; % can be optimized
-        vector.rc.ep{i}=repmat(erc(end-nt-np+1:end-nt,i)',M,1);
+        vector.rc.ep{i}=repmat(eg(end-nt-np+1:end-nt,i)',M,1);
         if i>nrccol-nt
             vector.rc.et{i}=et(i-nrccol+nt,end-nt+1:end);
         else

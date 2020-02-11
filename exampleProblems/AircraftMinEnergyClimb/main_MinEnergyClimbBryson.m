@@ -23,7 +23,7 @@
 
 clear all;close all;format compact;
 
-[problem,guess]=MinTimeClimbBryson;          % Fetch the problem definition
+[problem,guess]=MinEnergyClimbBryson;          % Fetch the problem definition
 % options= problem.settings(10,4);              % for hp method
 options= problem.settings(20);                  % for h method
 [solution,MRHistory]=solveMyProblem( problem,guess,options);

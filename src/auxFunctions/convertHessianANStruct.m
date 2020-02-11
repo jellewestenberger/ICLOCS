@@ -31,11 +31,7 @@ else
 end
 
 if ~isempty(HE) && h_method
-    if iscell(HE)
-        HE_new=cell(size(HE));
-    else
-        HE_new=spalloc(size(HE,1),size(HE,2),size(HE,2));
-    end
+    HE_new=cell(size(HE));
     HE_new(1:nt,1:nt)=HE(end-nt+1:end,end-nt+1:end);%t t
     HE_new(1+nt:nt+np,1+nt:nt+np)=HE(end-nt-np+1:end-nt,end-nt-np+1:end-nt);%p p
     HE_new(1+nt+np:nt+np+n,1+nt+np:nt+np+n)=HE(1:n,1:n); %x0 x0
@@ -61,7 +57,7 @@ if ~isempty(HE) && h_method
     HE_new(1+nt+np+n:nt+np+n+m,1+nt+np+n+m:nt+np+n*2+m)=transpose(HE(1+n:n*2,1+n*2:n*2+m)); %u0 xf
     HE_new(1+nt+np+n:nt+np+n+m,1+nt+np+n*2+m:nt+np+n*2+m*2)=HE(1+n*2:n*2+m,1+n*2+m:n*2+m*2); %u0 uf
     
-    HE_new(1+nt+np+n+m:nt+np+n*2+m,1+nt+np+n*2+m:nt+np+n*2+m*2)=HE(1+n:n*2,1+n*2+m:n*2+m*2); %xf uf
+    HE_new(1+nt+np+n+m:nt+np+n*2+m,1+nt+np+n*2+m:nt+np+n*2+m*2)=transpose(HE(1+n:n*2,1+n*2+m:n*2+m*2)); %xf uf
 else
     HE_new=HE;
 end

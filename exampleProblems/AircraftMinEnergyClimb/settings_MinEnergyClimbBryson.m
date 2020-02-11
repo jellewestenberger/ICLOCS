@@ -1,4 +1,4 @@
-function options = settings_AlyChan(varargin)
+function options = settings_MinEnergyClimbBryson(varargin)
 
 %SETTINGS - General and solver-specific settings are selected here
 % Unless specified otherwise the options are set using 0 => no and 1 => yes
@@ -184,7 +184,7 @@ options.ipopt.limited_memory_max_skipping=1;  % Threshold for successive iterati
 % - fixed mesh ('fixed')
 % - with local refinement of mesh ('mesh_refinement')
 % - flexible mesh with adaptively spaced segments, ONLY AVAILABLE FOR hpLGR Discretization with Direct Collocation Method ('hp_flexible')
-options.meshstrategy='fixed';
+options.meshstrategy='mesh_refinement';
 
 % Mesh Refinement Method
 %---------------------------------------
@@ -212,7 +212,7 @@ options.disContInputs=0;
 % Minimum and maximum time interval
 %---------------------------------------
 % Define the minimum and maximum time interval (in the same unit as in t) for the hp-flexible method and for mesh refinement schemes
-options.mintimeinterval=0.1; 
+options.mintimeinterval=1e-09; 
 options.maxtimeinterval=inf; 
 
 % Distribution of integration steps. 
@@ -225,13 +225,13 @@ options.tau=0;
 
 %% Other Settings
 
-% Cold/Warm/Hot Start (recommended)
+% Cold/Warm/Hot Start 
 %---------------------------------------
 options.start='Cold';
 
 % Automatic scaling (recommended)
 %---------------------------------------
-options.scaling=0;
+options.scaling=1;
 
 % Reorder of LGR Method
 %---------------------------------------
@@ -298,7 +298,7 @@ options.print.relative_local_error=1;
 options.print.cost=1;
 
 
-% Plot figures
+% Plot figures £¨when genSolutionPlots function is called)
 %---------------------------------------
 % 0: Do not plot
 % 1: Plot all figures (state and input trajectory, multipliers/costate values and errors)

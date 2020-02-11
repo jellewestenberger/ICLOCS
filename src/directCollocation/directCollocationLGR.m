@@ -31,8 +31,6 @@ function [solution,XU0f]=directCollocationLGR(required,z,data,phaseNo)
 %%
 global sol ro_time;
 
-sol{phaseNo}.z=z;
-
 % Define some useful variables
 [nt,np,n,m,ng,~,M,~,~,npd,~,npduidx,nps,~,~,~,~]=deal(data.sizes{1:17});
 
@@ -197,7 +195,7 @@ switch required
         elseif strcmp(data.options.derivatives,'analytic')
             jacConst=data.analyticDeriv.jacConst;
             [df,dg,db]=jacConst(f,g,X,U,P,t,b,x0,xf,u0,uf,p,tf,t0,data);
-            [sol{phaseNo}.jacConst,sol{phaseNo}.Jf]=jacConstzLGR(df,dg,g,f,X_Np1,U,P,tau_inc,db,b,x0,xf,u0,uf,p,t0,tf,data);
+            [sol{phaseNo}.jacConst,sol{phaseNo}.Jf]=jacConstzLGR(df,dg,g,f,X,U,P,tau_inc,db,b,x0,xf,u0,uf,p,t0,tf,data);
         end
         if data.options.reorderLGR
             sol{phaseNo}.jacConst=sol{phaseNo}.jacConst(data.reorder.vert_idx,data.reorder.z_idx);
